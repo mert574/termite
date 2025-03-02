@@ -7,4 +7,10 @@ installGlobals();
 
 export default defineConfig({
   plugins: [remix(), tsconfigPaths()],
+  css: {
+    devSourcemap: true,
+    modules: {
+      localsConvention: 'camelCaseOnly',
+    },
+  },
 });

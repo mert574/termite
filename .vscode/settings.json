@@ -1,0 +1,15 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5433,
+      "driver": "PostgreSQL",
+      "name": "termite-db",
+      "group": "termite",
+      "database": "termite_db",
+      "username": "postgres",
+      "password": "postgres"
+    }
+  ]
+}

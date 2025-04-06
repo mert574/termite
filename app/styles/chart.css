@@ -1,0 +1,64 @@
+/* TradingView Chart Styles */
+
+/* Candle colors */
+.tv-chart .pane-legend-item-value-container[data-name="up"] {
+  color: #26a69a !important;
+}
+
+.tv-chart .pane-legend-item-value-container[data-name="down"] {
+  color: #ef5350 !important;
+}
+
+/* Background and grid */
+.chart-page {
+  background-color: #1a1a1a !important;
+}
+
+.chart-container {
+  border: none !important;
+}
+
+.chart-markup-table.pane {
+  background-color: #1a1a1a !important;
+}
+
+/* Grid lines */
+.chart-markup-table.pane .price-axis {
+  border-color: #363c4e !important;
+}
+
+.chart-markup-table.pane .time-axis {
+  border-color: #363c4e !important;
+}
+
+/* Text colors */
+.chart-markup-table.pane text {
+  fill: #999 !important;
+}
+
+/* Loading screen */
+.loading-indicator {
+  background-color: #1a1a1a !important;
+}
+
+/* Chart toolbar */
+.chart-controls-bar {
+  background-color: #1a1a1a !important;
+  border-color: #363c4e !important;
+}
+
+/* Chart buttons */
+.chart-controls-bar button {
+  color: #999 !important;
+  border-color: #363c4e !important;
+}
+
+.chart-controls-bar button:hover {
+  background-color: #363c4e !important;
+}
+
+/* VWAP line */
+.study-vwap path {
+  stroke: #FFD700 !important;
+  stroke-width: 2px !important;
+} 

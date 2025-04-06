@@ -1,0 +1,96 @@
+.lm_goldenlayout {
+  background: #111827 !important;
+}
+
+.lm_content {
+  background: #1F2937 !important;
+  border: 1px solid #374151 !important;
+  border-radius: 0 0 0.5rem 0.5rem !important;
+}
+
+.lm_header {
+  background: #111827 !important;
+  height: 2.5rem !important;
+}
+
+.lm_tab {
+  background: #1F2937 !important;
+  border: 1px solid #374151 !important;
+  border-bottom: none !important;
+  height: 2.5rem !important;
+  line-height: 2.5rem !important;
+  padding: 0 2.5rem 0 1rem !important;
+  color: #9CA3AF !important;
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+  margin-right: 0.25rem !important;
+  position: relative !important;
+}
+
+.lm_tab.lm_active {
+  background: #374151 !important;
+  color: #F3F4F6 !important;
+  border-bottom-color: #374151 !important;
+}
+
+.lm_close_tab {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  right: 0.75rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  position: absolute !important;
+}
+
+.lm_splitter {
+  background: #374151 !important;
+  opacity: 0.5 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.lm_splitter:hover {
+  background: #4B5563 !important;
+  opacity: 1 !important;
+}
+
+.lm_items {
+  border-radius: 0.5rem !important;
+}
+
+.lm_item_container {
+  background: #1F2937 !important;
+  border-radius: 0.5rem !important;
+}
+
+/* Fix header icons spacing */
+.lm_header .lm_controls {
+  position: absolute !important;
+  right: 3px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+.lm_header .lm_controls .lm_tabdropdown_list {
+  background-color: #1F2937 !important;
+  border: 1px solid #374151 !important;
+  border-radius: 0.5rem !important;
+}
+
+/* Fix maximize button */
+.lm_maximise {
+  background-image: none !important;
+  position: relative !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  margin-left: 0.5rem !important;
+}
+
+.lm_maximise::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 2px !important;
+  left: 2px !important;
+  right: 2px !important;
+  bottom: 2px !important;
+  border: 1px solid currentColor !important;
+  border-radius: 2px !important;
+} 

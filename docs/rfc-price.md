@@ -6,7 +6,7 @@ This RFC outlines the design and implementation plan for an API that provides hi
 
 ## **2. Problem Statement**
 
-There is a need to implement an API endpoint that delivers historical price kline data. This data is essential for technical analysis, algorithmic trading, and various other financial applications. The goal is to ensure high performance, scalability, and flexibility in data retrieval.
+There is a need to implement an API endpoint that delivers historical price kline data. This data is essential for market visualization and hypothetical position analysis. The goal is to ensure high performance, scalability, and flexibility in data retrieval.
 
 ## **3. Goals and Objectives**
 
@@ -360,7 +360,7 @@ backfillData('BTCUSDT', Date.now() - 7 * 24 * 60 * 60 * 1000, Date.now());
    - Create `.env.example` and `.env` files
    - Add Docker environment variables
    - Add database connection strings
-   - Add API keys and secrets
+   - Document public market-data endpoints; no exchange account keys are needed
 
 3. Set up TimescaleDB and Create Tables
    ```sql

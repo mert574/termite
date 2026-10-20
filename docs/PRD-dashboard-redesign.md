@@ -4,10 +4,10 @@
 
 ### Core Requirements
 1. Create a flexible dashboard layout that will support:
-   - Position log/history panel area
-   - Trade management panel area
+   - Planning journal panel area
+   - Position planning panel area
    - Technical analysis panel area with TradingView integration
-   - Trade notes panel area
+   - Planning notes panel area
    - Alerts panel area
    - Monitoring panel area
 
@@ -37,22 +37,22 @@
      - Drawing-based alerts (trend line breaks)
      - Alert management UI
      - Alert persistence
-   - Trade Management Visualization:
-     - Active position lines with P&L display
+   - Position planning overlays:
+     - Planned entry levels with projected P&L
      - Take Profit and Stop Loss lines
-     - Entry orders visualization
+     - Planned entry levels
      - Position size and direction indicators
      - Risk/Reward ratio display
      - Multiple TP/SL levels support
      - Trade statistics overlay
-     - Quick modify handles for TP/SL
-   - Trade Data Integration:
-     - Real-time P&L updates
+     - Editable planning levels for TP/SL
+   - Position calculations:
+     - Projected P&L against public prices
      - Position size calculations
      - Risk percentage visualization
-     - Trade duration tracking
-     - Entry/exit execution points
-     - Trade history markers
+     - Scenario duration tracking
+     - Planned entry/exit markers
+     - Scenario history markers
 
 ### Functional Requirements
 1. Layout and Navigation
@@ -106,17 +106,17 @@
 - Implement chart-panel integration
 - Chart state persistence
 - Theme synchronization
-- Trading features implementation:
+- Chart exploration and planning:
   - Symbol switching interface
   - Timeframe controls
   - Drawing tools integration
   - Indicator management
   - Alert system setup
   - Trade visualization:
-    - Position lines with P&L
+    - Planned position lines with P&L
     - TP/SL levels
     - Risk/Reward display
-    - Quick modify controls
+    - Editable planning levels
 - Performance optimizations:
   - Chart instance lifecycle management
   - Memory leak prevention
@@ -131,10 +131,6 @@
 - Chart performance optimizations
 
 ### Out of Scope
-- Actual trading features implementation
-- API integrations (except TradingView)
-- Trading data management
-- Trading logic
 - Notifications system
 - Technical analysis implementation (will use TradingView's built-in tools)
 
@@ -176,7 +172,7 @@
          IndicatorPanel.tsx
          AlertManager.tsx
          TradeOverlay.tsx
-         TradeControls.tsx
+         PlanningControls.tsx
          RiskPanel.tsx
        ui/
          Tooltip.tsx
@@ -297,21 +293,21 @@
      - Alert state management
      - Notification handling
      - Alert persistence
-   - Trade Management Integration:
+   - Position planning integration:
      - Position line rendering
      - TP/SL line management
      - P&L calculation and display
      - Risk/Reward visualization
-     - Quick modify controls
+     - Editable planning levels
      - Trade statistics overlay
      - Position size indicators
      - Multiple TP/SL handling
-   - Trade Data Handling:
-     - Real-time P&L updates
-     - Position tracking
+   - Scenario data handling:
+     - Projected P&L against public prices
+     - Scenario tracking
      - Risk calculations
-     - Trade history markers
-     - Entry/exit point tracking
+     - Scenario history markers
+     - Planned entry/exit markers
 
 3. State Management
    - Chart configuration persistence
@@ -321,8 +317,8 @@
    - Drawing objects persistence
    - Indicator configurations
    - Alert definitions and states
-   - Trade visualization state:
-     - Active positions
+   - Scenario visualization state:
+     - Planned positions
      - TP/SL levels
      - Position sizes
      - P&L calculations
@@ -350,7 +346,7 @@
      - Position lines and P&L display
      - TP/SL visualization
      - Risk/Reward overlay
-     - Quick modify controls
+     - Editable planning levels
    - Implement alert system
    - Add theme synchronization
    - Optimize performance

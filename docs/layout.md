@@ -1,6 +1,6 @@
 # Layout System Documentation
 
-The layout system is a core component of Termoire's dashboard, implemented using [Golden Layout](https://golden-layout.com/). It provides a flexible workspace that supports multiple panel types including TradingView charts, trade management, alerts, and monitoring panels.
+The layout system is a core component of Termite's dashboard, implemented using [Golden Layout](https://golden-layout.com/). It provides a flexible workspace that supports multiple panel types including TradingView charts, position planning, alerts, and monitoring panels.
 
 ## Core Components
 
@@ -19,11 +19,11 @@ interface LayoutContextType {
 ```typescript
 type PanelType = 
   | 'chart'      // TradingView chart panel
-  | 'trades'     // Trade management panel
+  | 'trades'     // Position planner
   | 'alerts'     // Alerts panel
   | 'notes'      // Trade notes panel
   | 'monitor'    // Monitoring panel
-  | 'history';   // Position log/history panel
+  | 'history';   // Planning journal panel
 
 interface PanelProps {
   container: ComponentContainer;  // Golden Layout container

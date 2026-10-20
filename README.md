@@ -2,11 +2,7 @@
 
 A cryptocurrency market dashboard built with Remix, React, TypeScript, and
 TimescaleDB. It combines dockable charts, public Bybit candle data, VWAP, and
-position-sizing controls.
-
-The current app is a development prototype. Position controls use local/mock
-state; they do not connect to an exchange account or place real orders. No
-exchange API key is required for the public market-data paths.
+position-sizing tools.
 
 ## Run locally
 
@@ -68,6 +64,8 @@ port. CI checks types, lint, focused tests, and the production build.
 - `app/db/` and `migrations/`: TimescaleDB connection and schema.
 - `app/mocks/`: mock trading state, separate from public market data.
 - `docs/`: existing product plans and technical RFCs.
+
+See [ROADMAP.md](ROADMAP.md) for planned work.
 
 ## License
 

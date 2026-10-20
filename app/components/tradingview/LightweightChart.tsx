@@ -190,12 +190,6 @@ function ChartComponent({ symbol = 'BTCUSDT' }: LightweightChartProps) {
       chart = createChart(chartContainerRef.current, chartOptions);
       chartRef.current = chart;
 
-      // Remove watermark by setting its color to transparent
-      const watermark = chartContainerRef.current.querySelector('#tv-attr-logo');
-      if (watermark) {
-        (watermark as HTMLElement).style.display = 'none';
-      }
-
       // Add candlestick series
       mainSeries = chart.addSeries(CandlestickSeries, {
         upColor: '#26a69a',

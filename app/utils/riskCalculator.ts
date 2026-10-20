@@ -14,7 +14,7 @@ export function calculatePositionSize(params: {
   riskAmount: number;
   stopLossPercentage: number;
 }): number {
-  const { accountBalance, riskAmount, stopLossPercentage } = params;
+  const { riskAmount, stopLossPercentage } = params;
   return (riskAmount / stopLossPercentage) * 100;
 }
 

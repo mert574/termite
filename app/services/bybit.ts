@@ -9,7 +9,6 @@ import axios from 'axios';
 import { pipeline } from 'stream/promises';
 import path from 'path';
 import os from 'os';
-import process from 'process';
 
 interface MonthRange {
     start: Date;
@@ -40,7 +39,7 @@ export class BybitService {
             let latestCsvTimestamp = new Date(0);
             for (const range of monthRanges) {
                 // Download and process each month's data
-                const lastProcessedTime = await this.processMonthlyData(symbol, range, start, end);
+                const lastProcessedTime = await this.processMonthlyData(symbol, range);
                 if (lastProcessedTime > latestCsvTimestamp) {
                     latestCsvTimestamp = lastProcessedTime;
                 }
@@ -189,9 +188,7 @@ export class BybitService {
      */
     private async processMonthlyData(
         symbol: string,
-        range: MonthRange,
-        filterStart: Date,
-        filterEnd: Date
+        range: MonthRange
     ): Promise<Date> {
         const tempFile = path.join(BybitService.TEMP_DIR, `bybit_${symbol}_${range.start.getTime()}.csv.gz`);
         const tempCsvFile = tempFile.replace('.gz', '');
@@ -316,7 +313,7 @@ export class BybitService {
      */
     private getMonthRanges(symbol: string, start: Date, end: Date): MonthRange[] {
         const ranges: MonthRange[] = [];
-        let currentDate = new Date(start);
+        const currentDate = new Date(start);
 
         // Set to first day of month
         currentDate.setUTCDate(1);

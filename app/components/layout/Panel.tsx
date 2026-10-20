@@ -14,7 +14,6 @@ export interface PanelProps {
 }
 
 export default function Panel({
-  id,
   title,
   children,
   onClose,

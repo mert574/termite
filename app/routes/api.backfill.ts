@@ -1,10 +1,11 @@
 import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from '@remix-run/node';
 import { BackfillService } from '~/services/backfill';
 import { z } from 'zod';
+import { symbolSchema } from '~/utils/marketData';
 
 // Input validation schema for starting a backfill
 const BackfillSchema = z.object({
-    symbol: z.string().min(1),
+    symbol: symbolSchema,
     start: z.string().datetime(),
     end: z.string().datetime(),
     batchSize: z.number().int().positive().optional()
@@ -12,7 +13,7 @@ const BackfillSchema = z.object({
 
 // Input validation schema for checking gaps
 const GapsSchema = z.object({
-    symbol: z.string().min(1),
+    symbol: symbolSchema,
     start: z.string().datetime(),
     end: z.string().datetime(),
     type: z.literal('gaps')
@@ -99,4 +100,4 @@ export async function loader({ request }: LoaderFunctionArgs) {
             { status: 500 }
         );
     }
-} 
+}

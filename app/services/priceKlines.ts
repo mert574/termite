@@ -1,4 +1,5 @@
 import { pool } from '~/db';
+import { priceTable } from '~/utils/marketData';
 import type { Timeframe, Kline, KlineAggregate } from '~/db/schema';
 
 export class PriceKlineService {
@@ -7,7 +8,7 @@ export class PriceKlineService {
      */
     static async insert(symbol: string, timeframe: Timeframe, kline: Kline) {
         const query = `
-            INSERT INTO price_klines_${symbol} (ts, open, high, low, close, volume)
+            INSERT INTO ${priceTable(symbol)} (ts, open, high, low, close, volume)
             VALUES ($1, $2, $3, $4, $5, $6)
             ON CONFLICT (ts) 
             DO UPDATE SET
@@ -37,7 +38,7 @@ export class PriceKlineService {
         ).join(',');
 
         const query = `
-            INSERT INTO price_klines_${symbol} (ts, open, high, low, close, volume)
+            INSERT INTO ${priceTable(symbol)} (ts, open, high, low, close, volume)
             VALUES ${values}
             ON CONFLICT (ts) 
             DO UPDATE SET
@@ -67,7 +68,7 @@ export class PriceKlineService {
                 low,
                 close,
                 volume
-            FROM price_klines_${symbol}
+            FROM ${priceTable(symbol)}
             WHERE ts BETWEEN $1 AND $2
             ORDER BY ts ASC
         `;
@@ -93,7 +94,7 @@ export class PriceKlineService {
                 low,
                 close,
                 volume
-            FROM price_klines_${symbol}_${timeframe}
+            FROM ${priceTable(symbol, timeframe)}
             WHERE ts BETWEEN $1 AND $2
             ORDER BY ts ASC
         `;
@@ -107,7 +108,7 @@ export class PriceKlineService {
      */
     static async deleteKlines(symbol: string, timeframe: Timeframe, start: Date, end: Date) {
         const query = `
-            DELETE FROM price_klines_${symbol}
+            DELETE FROM ${priceTable(symbol)}
             WHERE ts BETWEEN $1 AND $2
         `;
 
@@ -135,7 +136,7 @@ export class PriceKlineService {
                 ts AS gap_start,
                 ts + '5 minutes'::interval AS gap_end
             FROM time_series
-            LEFT JOIN price_klines_${symbol} pk
+            LEFT JOIN ${priceTable(symbol)} pk
                 ON pk.ts = ts
             WHERE pk.ts IS NULL
             ORDER BY ts
@@ -151,4 +152,4 @@ export class PriceKlineService {
             end: gap.gap_end
         }));
     }
-} 
+}

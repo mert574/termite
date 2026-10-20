@@ -1,27 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { CandlestickSeries, createChart, LineSeries } from 'lightweight-charts';
 import { ClientOnly } from 'remix-utils/client-only';
 import type { 
   DeepPartial, 
   ChartOptions, 
   IChartApi, 
-  Time,
   ISeriesApi,
 } from 'lightweight-charts';
 import type { Position } from '~/types/trade';
 import { VWAPCalculator } from '~/utils/vwap';
 import type { Timeframe } from '~/db/schema';
-import { ChartDataService } from '~/services/chartData';
+import { ChartDataService, type ChartCandle } from '~/services/chartData';
 
 interface LightweightChartProps {
   symbol?: string;
   autosize?: boolean;
   position?: Position | null;
-}
-
-interface VWAPData {
-  time: Time;
-  value: number;
 }
 
 const TIMEFRAMES: { label: string; value: Timeframe }[] = [
@@ -55,8 +49,23 @@ function SSRFallback() {
   );
 }
 
-function ChartComponent({ symbol = 'BTCUSDT', autosize = true, position }: LightweightChartProps) {
+  // Function to get interval in seconds from timeframe
+function getIntervalSeconds(tf: Timeframe): number {
+    switch (tf) {
+      case '5m': return 5 * 60;
+      case '15m': return 15 * 60;
+      case '30m': return 30 * 60;
+      case '1h': return 60 * 60;
+      case '4h': return 4 * 60 * 60;
+      case '1d': return 24 * 60 * 60;
+      default: return 30 * 60;
+    }
+}
+
+function ChartComponent({ symbol = 'BTCUSDT' }: LightweightChartProps) {
   const [timeframe, setTimeframe] = useState<Timeframe>('30m');
+  const timeframeRef = useRef(timeframe);
+  timeframeRef.current = timeframe;
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const mainSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
@@ -66,12 +75,12 @@ function ChartComponent({ symbol = 'BTCUSDT', autosize = true, position }: Light
   const vwapCalculatorRef = useRef<VWAPCalculator>(new VWAPCalculator());
 
   // Function to update countdown
-  const updateCountdown = () => {
+  const updateCountdown = useCallback(() => {
     if (!chartDataServiceRef.current?.lastCandleTime || !mainSeriesRef.current) return;
 
     const currentTime = Math.floor(Date.now() / 1000);
     const barStartTime = Number(chartDataServiceRef.current.lastCandleTime);
-    const barEndTime = barStartTime + (getIntervalSeconds(timeframe));
+    const barEndTime = barStartTime + (getIntervalSeconds(timeframeRef.current));
     const timeLeft = barEndTime - currentTime;
 
     if (timeLeft > 0) {
@@ -82,20 +91,7 @@ function ChartComponent({ symbol = 'BTCUSDT', autosize = true, position }: Light
         title: countdownText,
       });
     }
-  };
-
-  // Function to get interval in seconds from timeframe
-  const getIntervalSeconds = (tf: Timeframe): number => {
-    switch (tf) {
-      case '5m': return 5 * 60;
-      case '15m': return 15 * 60;
-      case '30m': return 30 * 60;
-      case '1h': return 60 * 60;
-      case '4h': return 4 * 60 * 60;
-      case '1d': return 24 * 60 * 60;
-      default: return 30 * 60;
-    }
-  };
+  }, []);
 
   // Function to handle timeframe change
   const handleTimeframeChange = async (newTimeframe: Timeframe) => {
@@ -145,6 +141,7 @@ function ChartComponent({ symbol = 'BTCUSDT', autosize = true, position }: Light
         layout: {
           background: { color: '#1a1a1a' },
           textColor: '#d1d4dc',
+          attributionLogo: true,
         },
         grid: {
           vertLines: { color: '#363c4e' },
@@ -235,7 +232,7 @@ function ChartComponent({ symbol = 'BTCUSDT', autosize = true, position }: Light
       vwapSeriesRef.current = vwapSeries;
 
       // Initialize chart data service
-      const chartDataService = new ChartDataService(symbol, timeframe, {
+      const chartDataService = new ChartDataService(symbol, timeframeRef.current, {
         onCandleUpdate: (candle: ChartCandle) => {
           if (mainSeriesRef.current) {
             mainSeriesRef.current.update(candle);
@@ -306,7 +303,7 @@ function ChartComponent({ symbol = 'BTCUSDT', autosize = true, position }: Light
         chart.remove();
       }
     };
-  }, [symbol]);
+  }, [symbol, updateCountdown]);
 
   const handleResize = () => {
     if (chartContainerRef.current && chartRef.current) {
@@ -349,4 +346,4 @@ export default function LightweightChart(props: LightweightChartProps) {
       {() => <ChartComponent {...props} />}
     </ClientOnly>
   );
-} 
+}

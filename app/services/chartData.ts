@@ -1,7 +1,6 @@
 import { WebsocketClient } from 'bybit-api';
 import type { Time } from 'lightweight-charts';
-import type { Timeframe } from '~/db/schema';
-import type { VWAPCandle } from '~/utils/vwap';
+import type { Timeframe, Kline } from '~/db/schema';
 
 export interface ChartCandle {
   time: Time;
@@ -57,7 +56,7 @@ export class ChartDataService {
         throw new Error('No historical data received');
       }
 
-      return data.klines.map((kline: any) => ({
+      return data.klines.map((kline: Kline) => ({
         time: Math.floor(new Date(kline.ts).getTime() / 1000) as Time,
         open: Number(kline.open),
         high: Number(kline.high),
@@ -77,7 +76,7 @@ export class ChartDataService {
     }
 
     this.wsClient = new WebsocketClient({
-      market: 'linear',
+      market: 'v5',
       testnet: false,
       reconnectTimeout: 500,
       restOptions: {

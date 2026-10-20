@@ -2,10 +2,11 @@ import { json, type LoaderFunctionArgs } from '@remix-run/node';
 import { PriceKlineService } from '~/services/priceKlines';
 import { timeframes, type Timeframe } from '~/db/schema';
 import { z } from 'zod';
+import { symbolSchema } from '~/utils/marketData';
 
 // Input validation schema
 const QuerySchema = z.object({
-    symbol: z.string().min(1),
+    symbol: symbolSchema,
     timeframe: z.enum(timeframes),
     start: z.string().datetime(),
     end: z.string().datetime(),
@@ -59,4 +60,4 @@ export async function loader({ request }: LoaderFunctionArgs) {
             { status: 500 }
         );
     }
-} 
+}

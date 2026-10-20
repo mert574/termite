@@ -2,22 +2,12 @@ import { useRef } from 'react';
 import 'golden-layout/dist/css/goldenlayout-base.css';
 import 'golden-layout/dist/css/themes/goldenlayout-dark-theme.css';
 import { useGoldenLayout } from '~/hooks/useGoldenLayout';
-import ChartPanel from '~/components/panels/ChartPanel';
-import TradesPanel from '~/components/panels/TradesPanel';
-import AlertsPanel from '~/components/panels/AlertsPanel';
 import StatusBar from './StatusBar';
 import { LayoutProvider } from '~/context/LayoutContext';
-import type { PanelComponent } from '~/types/layout';
-
-const PANEL_COMPONENTS: PanelComponent[] = [
-  { type: 'chart', component: ChartPanel },
-  { type: 'trades', component: TradesPanel },
-  { type: 'alerts', component: AlertsPanel },
-];
 
 export default function DashboardLayout() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { isReady, closedPanels, restorePanel } = useGoldenLayout(containerRef, PANEL_COMPONENTS);
+  const { isReady, closedPanels, restorePanel } = useGoldenLayout(containerRef);
 
   return (
     <LayoutProvider value={{ isReady, closedPanels, restorePanel }}>
@@ -35,4 +25,4 @@ export default function DashboardLayout() {
       </div>
     </LayoutProvider>
   );
-} 
+}

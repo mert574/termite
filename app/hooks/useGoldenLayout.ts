@@ -1,23 +1,18 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { createElement, useEffect, useRef, useState, useCallback } from 'react';
 import {
   GoldenLayout,
   ComponentContainer,
   JsonValue,
   LayoutConfig,
-  ComponentItemConfig,
-  RowOrColumnItemConfig,
   ComponentItem,
-  ContentItem,
 } from 'golden-layout';
-import type { PanelComponent, PanelType } from '~/types/layout';
-import { createElement } from 'react';
+import type { PanelComponent } from '~/types/layout';
 import { createRoot } from 'react-dom/client';
 import capitalize from 'lodash/capitalize';
 import ChartPanel from '~/components/panels/ChartPanel';
 import TradesPanel from '~/components/panels/TradesPanel';
 import AlertsPanel from '~/components/panels/AlertsPanel';
 import LightweightChartPanel from '~/components/panels/LightweightChartPanel';
-import type { ComponentType } from 'react';
 
 const DEFAULT_CONFIG = {
   settings: {
@@ -85,11 +80,7 @@ export function useGoldenLayout(containerRef: React.RefObject<HTMLElement>) {
     const panel = AVAILABLE_PANELS.find(p => p.type === type);
     if (!panel) return;
 
-    const rootItem = (layoutRef.current as any).root.contentItems[0] as ContentItem;
-    const stack = rootItem.contentItems.find((item: ContentItem) => item.type === 'stack');
-    if (!stack) return;
-
-    (stack as any).addComponent(type, {}, capitalize(type));
+    layoutRef.current.addComponent(type, {}, capitalize(type));
     setClosedPanels(prev => prev.filter(p => p !== type));
   }, []);
 
@@ -155,7 +146,7 @@ export function useGoldenLayout(containerRef: React.RefObject<HTMLElement>) {
       setIsReady(false);
       isInitializing.current = true;
     };
-  }, []);
+  }, [containerRef]);
 
   return {
     layout: layoutRef.current,

@@ -6,12 +6,10 @@ import BasePanel from '~/components/layout/BasePanel';
 import PositionCreation from '~/components/position/PositionCreation';
 import { PositionBuilderProvider } from '~/context/PositionBuilderContext';
 
-const INITIAL_BALANCE = 1200; // $1,200
-const RISK_PERCENTAGE = 0.03; // 3% of account balance
 const LEVERAGE = 10; // Fixed 10x leverage
 
 export default function TradesPanel(props: PanelProps) {
-  const [positions, setPositions] = useState<PositionV5[]>([]);
+  const [, setPositions] = useState<PositionV5[]>([]);
 
   const handleCreatePosition = useCallback(
     (values: OrderFormValues) => {
@@ -51,16 +49,15 @@ export default function TradesPanel(props: PanelProps) {
         mmrSysUpdatedTime: '',
         leverageSysUpdatedTime: '',
         seq: 0,
+        openTime: Date.now(),
+        positionIMByMp: '0',
+        positionMMByMp: '0',
       };
 
       setPositions((prev) => [...prev, newPosition]);
     },
     []
   );
-
-  const handleSubmit = (values: PositionFormState) => {
-    // Handle position creation
-  };
 
   return (
     <BasePanel {...props}>
@@ -73,4 +70,4 @@ export default function TradesPanel(props: PanelProps) {
       </div>
     </BasePanel>
   );
-} 
+}

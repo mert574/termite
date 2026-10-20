@@ -1,6 +1,5 @@
-import React from 'react';
 import type { PositionSideV5 } from 'bybit-api';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { usePositionBuilder } from '~/context/PositionBuilderContext';
 
 const MIN_RISK = 0.2;
@@ -75,7 +74,7 @@ export default function PositionSizeSelector() {
 
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-gray-300">Risk Size</label>
+          <label htmlFor="risk-size" className="text-sm font-medium text-gray-300">Risk Size</label>
           <div className="flex items-center space-x-2">
             <span className="text-sm text-gray-400">Current:</span>
             <span className={`text-sm font-bold ${getRiskMultiplierStyle(riskMultiplier)}`}>
@@ -85,6 +84,7 @@ export default function PositionSizeSelector() {
         </div>
         <input
           type="range"
+          id="risk-size"
           min={MIN_RISK}
           max={MAX_RISK}
           step={RISK_STEP}

@@ -6,7 +6,10 @@ import tsconfigPaths from "vite-tsconfig-paths";
 installGlobals();
 
 export default defineConfig({
-  plugins: [remix(), tsconfigPaths()],
+  plugins: [remix({ future: { v3_singleFetch: false } }), tsconfigPaths()],
+  resolve: {
+    alias: { events: 'events/' },
+  },
   css: {
     devSourcemap: true,
     modules: {

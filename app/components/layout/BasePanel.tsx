@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
-import type { ComponentContainer } from 'golden-layout';
 import type { PanelProps } from '~/types/layout';
 
 interface BasePanelProps extends PanelProps {
   children: React.ReactNode;
 }
 
-export default function BasePanel({ container, config, children }: BasePanelProps) {
+export default function BasePanel({ container, children }: BasePanelProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

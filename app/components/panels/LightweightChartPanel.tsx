@@ -8,9 +8,8 @@ export default function LightweightChartPanel(props: PanelProps) {
       <div className="flex h-full w-full">
         <LightweightChart
           symbol="BTCUSDT"
-          theme="dark"
         />
       </div>
     </BasePanel>
   );
-} 
+}

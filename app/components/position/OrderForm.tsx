@@ -1,6 +1,5 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import type { OrderTypeV5, PositionSideV5 } from 'bybit-api';
-import type { RiskTableRow } from '~/utils/riskCalculator';
 import { calculatePositionSize, calculateStopLossPrice, formatCurrency, formatPercentage } from '~/utils/riskCalculator';
 import { usePositionBuilder } from '~/context/PositionBuilderContext';
 
@@ -63,7 +62,7 @@ export default function OrderForm({
     stopLossPercentage,
   });
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const stopLoss = calculateStopLossPrice({
@@ -88,7 +87,7 @@ export default function OrderForm({
     } finally {
       setIsSubmitting(false);
     }
-  }, [symbol, side, orderType, price, stopLossPercentage, onSubmit, positionSize, tpAtVwap, tpAtNextFib, moveSlToBreakEven]);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3 rounded-lg border border-gray-700 bg-gray-800 p-3">
@@ -102,7 +101,7 @@ export default function OrderForm({
       <div className="grid grid-cols-2 gap-3">
         {/* Order Type */}
         <div>
-          <label className="mb-1 block text-sm font-medium text-gray-300">Order Type</label>
+          <span className="mb-1 block text-sm font-medium text-gray-300">Order Type</span>
           <div className="flex rounded-md">
             <button
               type="button"
@@ -146,7 +145,7 @@ export default function OrderForm({
 
         {/* Take Profit Options */}
         <div className="col-span-2 space-y-1">
-          <label className="block text-sm font-medium text-gray-300">Take Profit</label>
+          <span className="block text-sm font-medium text-gray-300">Take Profit</span>
           <div className="space-y-1">
             <label className="flex items-center space-x-2">
               <input

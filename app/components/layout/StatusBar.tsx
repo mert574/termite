@@ -22,6 +22,11 @@ export default function StatusBar() {
   return (
     <div className="flex h-8 items-center justify-between border-b border-gray-800 bg-gray-800/50 px-4">
       <div className="flex items-center space-x-4">
+        <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer"
+          className="text-xs text-gray-300 hover:underline"
+          title="TradingView Lightweight Charts — Copyright 2025 TradingView, Inc.">
+          Charts by TradingView
+        </a>
         <div className="text-sm font-semibold tracking-wider text-gray-100">
           <span className="text-green-500">term</span>
           <span>ite</span>
@@ -65,4 +70,4 @@ export default function StatusBar() {
       </div>
     </div>
   );
-} 
+}

@@ -1,6 +1,7 @@
 import { BybitService } from '~/services/bybit';
 import { PriceKlineService } from '~/services/priceKlines';
 import { pool } from '~/db';
+import { priceTable } from '~/utils/marketData';
 
 interface BackfillOptions {
     symbol: string;
@@ -116,11 +117,11 @@ export class BackfillService {
         const { symbol, start, end } = options;
 
         for (const timeframe of timeframes) {
-            const viewName = `price_klines_${symbol}_${timeframe}`;
+            const viewName = priceTable(symbol, timeframe);
 
             // For daily view, extend the window by one day on each side
-            let refreshStart = new Date(start);
-            let refreshEnd = new Date(end);
+            const refreshStart = new Date(start);
+            const refreshEnd = new Date(end);
             
             if (timeframe === '1d') {
                 refreshStart.setDate(refreshStart.getDate() - 1);
@@ -134,4 +135,4 @@ export class BackfillService {
             console.log(`Refreshed continuous aggregate for ${viewName}`);
         }
     }
-} 
+}

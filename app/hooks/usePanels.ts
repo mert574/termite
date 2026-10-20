@@ -106,8 +106,9 @@ export function usePanels(initialPanels: Panel[], initialLayout: Layout[]) {
   const removePanel = useCallback((id: string) => {
     setPanels((prev) => prev.filter(panel => panel.id !== id));
     setPanelStates((prev) => {
-      const { [id]: _, ...rest } = prev;
-      return rest;
+      const next = { ...prev };
+      delete next[id];
+      return next;
     });
   }, []);
 
@@ -118,6 +119,7 @@ export function usePanels(initialPanels: Panel[], initialLayout: Layout[]) {
   return {
     panels,
     panelStates,
+    updateLayout,
     toggleMinimize,
     toggleMaximize,
     removePanel,

@@ -22,7 +22,7 @@ interface TradingViewChartProps {
 
 declare global {
   interface Window {
-    TradingView: any;
+    TradingView: { widget: new (options: Record<string, unknown>) => { remove(): void } };
   }
 }
 
@@ -30,13 +30,12 @@ export default function TradingViewChart({
   symbol = 'BYBIT:BTCUSD.P',
   autosize = true,
   interval = '30',
-  position,
 }: TradingViewChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerId = useRef(`tradingview_${Math.random().toString(36).substring(7)}`);
-  const widgetRef = useRef<any>(null);
+  const widgetRef = useRef<{ remove(): void } | null>(null);
 
-  const initializeWidget = () => {
+  const initializeWidget = useCallback(() => {
     try {
       const widget = new window.TradingView.widget({
         // Core settings
@@ -86,7 +85,7 @@ export default function TradingViewChart({
     } catch (error) {
       // Handle error silently
     }
-  };
+  }, [symbol, interval, autosize]);
 
   useEffect(() => {
     if (window.TradingView) {
@@ -108,13 +107,13 @@ export default function TradingViewChart({
       try {
         if (widgetRef.current) {
           widgetRef.current.remove();
-          widgetRef.current = undefined;
+          widgetRef.current = null;
         }
       } catch (error) {
         // Handle error silently
       }
     };
-  }, []);
+  }, [initializeWidget]);
 
   return (
     <div 

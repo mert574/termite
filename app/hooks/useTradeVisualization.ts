@@ -9,7 +9,7 @@ interface TradeVisualizationState {
   error: Error | null;
 }
 
-export function useTradeVisualization(symbol: string) {
+export function useTradeVisualization() {
   const [state, setState] = useState<TradeVisualizationState>({
     position: null,
     orders: [],
@@ -73,8 +73,7 @@ export function useTradeVisualization(symbol: string) {
   const getRiskRewardRatio = useCallback(() => {
     if (!state.position?.takeProfit || !state.position?.stopLoss) return null;
 
-    const { entryPrice, takeProfit, stopLoss, side } = state.position;
-    const isLong = side === 'Long';
+    const { entryPrice, takeProfit, stopLoss } = state.position;
 
     const reward = Math.abs(takeProfit - entryPrice);
     const risk = Math.abs(stopLoss - entryPrice);
@@ -88,4 +87,4 @@ export function useTradeVisualization(symbol: string) {
     updateStopLoss,
     getRiskRewardRatio,
   };
-} 
+}

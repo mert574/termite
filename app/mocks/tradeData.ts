@@ -2,6 +2,7 @@ import type { Position, Order, Trade, TradingStats } from '~/types/trade';
 
 // Mock active position
 export const mockPositions: Position[] = [];
+export const mockPosition: Position | null = mockPositions[0] ?? null;
 
 // Mock open orders
 export const mockOrders: Order[] = [];
@@ -37,7 +38,6 @@ export function updatePosition(position: Position, newMarkPrice: number): Positi
     ...position,
     markPrice: newMarkPrice,
     unrealisedPnl: newUnrealisedPnl,
-    updatedAt: Date.now(),
   };
 }
 
@@ -46,11 +46,14 @@ type TradeDataCallback = (data: Position) => void;
 let intervalId: NodeJS.Timeout | null = null;
 
 export function subscribeToTradeUpdates(callback: TradeDataCallback) {
+  if (!mockPosition) return;
   if (intervalId) return;
 
+  const position = mockPosition;
+
   intervalId = setInterval(() => {
-    const newMarkPrice = simulatePriceUpdate(mockPosition.markPrice);
-    const updatedPosition = updatePosition(mockPosition, newMarkPrice);
+    const newMarkPrice = simulatePriceUpdate(position.markPrice);
+    const updatedPosition = updatePosition(position, newMarkPrice);
     callback(updatedPosition);
   }, 1000); // Update every second
 
@@ -60,4 +63,4 @@ export function subscribeToTradeUpdates(callback: TradeDataCallback) {
       intervalId = null;
     }
   };
-} 
+}
